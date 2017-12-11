@@ -4,4 +4,4 @@ app_fqdn="$1"
 
 [[ "$app_fqdn" =~ FORCE-SMOKE-TEST-FAILURE ]] && exit 1
 
-grep "Hello world from my Go program!" <<< "$(curl -svL "$app_fqdn")"
+grep "Hello world from my Go program!" <<< "$(curl -ksvL "https://$app_fqdn")"

@@ -12,7 +12,7 @@ login_to_bluemix() {
   set -o pipefail
   if ! cf apps | grep -e "org ${CF_ORG}.*space ${CF_SPACE}.*as ${CF_USERNAME}" >/dev/null
   then
-    cf login -a "$CF_URL" -u "$CF_USERNAME" -p "$CF_PASSWORD" -o "$CF_ORG" -s "$CF_SPACE" || cf create-space "$CF_SPACE"
+    cf login --skip-ssl-validation -a "$CF_URL" -u "$CF_USERNAME" -p "$CF_PASSWORD" -o "$CF_ORG" -s "$CF_SPACE" || cf create-space "$CF_SPACE"
     cf target -s "$CF_SPACE"
   fi
   set +o pipefail
@@ -43,7 +43,7 @@ push_example_apps() {
     local app_host_name="$2"
     cf push "${app_name}-old"
     cf push "$app_name"
-    cf map-route "$app_name" eu-gb.mybluemix.net -n "$app_host_name"
+    cf map-route "$app_name" cfapps.dev20.sc6.sapcloud.io -n "$app_host_name"
   popd
 }
 
